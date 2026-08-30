@@ -1,9 +1,8 @@
-FROM maven:3.9.6-eclipse-temurin-25 AS build
+FROM maven:3-eclipse-temurin-25 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# Step 2: Run the built JAR file using a lightweight Java runtime
 FROM eclipse-temurin:25-jre-jammy
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
